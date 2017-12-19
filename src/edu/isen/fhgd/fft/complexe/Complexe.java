@@ -1,9 +1,14 @@
 package edu.isen.fhgd.fft.complexe;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * Création d'un type de données : Complexe
  */
 public class Complexe {
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(Complexe.class);
 
     /**
      * Nombre réel du complexe
@@ -24,6 +29,7 @@ public class Complexe {
     public Complexe(float reel, float imaginaire) {
         this.reel = reel;
         this.imaginaire = imaginaire;
+        LOGGER.info("Création du nombre complexe : " + this.toString());
     }
 
     /**
