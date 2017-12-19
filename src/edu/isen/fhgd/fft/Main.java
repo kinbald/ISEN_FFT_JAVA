@@ -8,6 +8,7 @@ public class Main {
     private static final Logger LOGGER = LoggerFactory.getLogger(Main.class);
 
     public static void main(String[] args) {
-	// write your code here
+        float test[] = {0,0};
+	    Fft fft = new Fft(8, test);
     }
 }
