@@ -56,7 +56,7 @@ public class Fft {
      * @param value
      * @return
      */
-    private boolean testPuissance2(int value) {
+    public boolean testPuissance2(int value) {
         return Long.bitCount(value) == 1;
         //bitCount compte le nombre de bits à l'état haut
         //Pour la représentation d'une puissance de 2 en binaire, seul 1 bit est à l'état haut
