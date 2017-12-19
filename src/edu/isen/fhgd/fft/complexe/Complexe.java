@@ -3,6 +3,8 @@ package edu.isen.fhgd.fft.complexe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.text.DecimalFormat;
+
 /**
  * \file Complexe.java
  * Création d'un type de données : Complexe
@@ -31,6 +33,16 @@ public class Complexe {
         this.reel = reel;
         this.imaginaire = imaginaire;
         LOGGER.info("Création du nombre complexe : " + this.toString());
+    }
+
+    /**
+     * Constructeur par argument du nombre complexe
+     *
+     * @param argument
+     */
+    public Complexe(float argument) {
+        this.reel = (float) Math.cos(argument);
+        this.imaginaire = (float) Math.sin(argument);
     }
 
     /**
@@ -104,6 +116,8 @@ public class Complexe {
 
     @Override
     public String toString() {
-        return "Nombre complexe => Re : " + reel + " | Im : " + imaginaire;
+        DecimalFormat df=new DecimalFormat();
+        df.setMaximumFractionDigits(4);
+        return "Nombre complexe => Re : " + df.format(reel) + " | Im : " + df.format(imaginaire);
     }
 }
