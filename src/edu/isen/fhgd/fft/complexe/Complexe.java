@@ -32,7 +32,7 @@ public class Complexe {
     public Complexe(float reel, float imaginaire) {
         this.reel = reel;
         this.imaginaire = imaginaire;
-        LOGGER.info("Création du nombre complexe : " + this.toString());
+        LOGGER.debug("Création du nombre complexe : " + this.toString());
     }
 
     /**

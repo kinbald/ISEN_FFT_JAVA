@@ -125,14 +125,14 @@ public class FFT {
             FFT impaire = new FFT(this.tailleP2 / 2, tabImpairs);
             LOGGER.debug("Calcul transofrmées de Fourrier pour tableau paires et tableau impaires");
             // On calcule la FFT des deux listes
-            paire.FFTRelle();
-            impaire.FFTRelle();
+            paire.FFTComplexe();
+            impaire.FFTComplexe();
 
             LOGGER.debug("Remplissage tableau final");
             for (int k = 0; k <= (tailleP2 / 2) - 1; k++) {
                 Complexe M = new Complexe((float) (-2 * Math.PI * k) / tailleP2);
-                this.sortie[k] = (paire.sortie[k]).addition(impaire.sortie[k].multiplication(M));
-                this.sortie[k + (tailleP2 / 2)] = (paire.sortie[k]).soustraction(impaire.sortie[k].multiplication(M));
+                this.sortie[k] = (paire.getSortie(k)).addition(impaire.getSortie(k).multiplication(M));
+                this.sortie[k + (tailleP2 / 2)] = (paire.getSortie(k)).soustraction(impaire.getSortie(k).multiplication(M));
             }
         }
         return this.sortie;
@@ -152,8 +152,8 @@ public class FFT {
         this.FFTComplexe();
         LOGGER.debug("Remplissage du tableau de sortie avec le conjugué");
         for (int i = 0; i < this.sortie.length; i++) {
-            this.sortie[i] = this.sortie[i].conjugue();
-            this.sortie[i] = this.sortie[i].multiplication(new Complexe(1 / (float) this.sortie.length, 0));
+            this.sortie[i] = this.getSortie(i).conjugue();
+            this.sortie[i] = this.getSortie(i).multiplication(new Complexe(1 / (float) this.sortie.length, 0));
         }
         return this.sortie;
     }
@@ -177,5 +177,28 @@ public class FFT {
      */
     public int getTailleP2() {
         return tailleP2;
+    }
+
+
+    /**
+     * Renvoie le tableau de sortie
+     *
+     * @return
+     */
+    public Complexe[] getSortie() {
+        return sortie;
+    }
+
+    /**
+     * Renvoie une valeur du tableau de sortie
+     *
+     * @return
+     */
+    public Complexe getSortie(int lecture) throws IllegalArgumentException {
+        if(lecture >= 0 && lecture < sortie.length)
+        {
+            return sortie[lecture];
+        }
+        throw new IllegalArgumentException("Lecture à la mauvaise case");
     }
 }
