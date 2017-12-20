@@ -78,10 +78,25 @@ public class Fft {
             impaire.fftRapideComplexe();
 
             for (int k = 0; k <= (tailleP2 / 2) - 1; k++) {
-                Complexe M = new Complexe((float)(2 * Math.PI * k) / tailleP2);
+                Complexe M = new Complexe((float) (-2 * Math.PI * k) / tailleP2);
                 this.sortie[k] = (paire.sortie[k]).addition(impaire.sortie[k].multiplication(M));
-                this.sortie[k+(tailleP2/2)] = (paire.sortie[k]).soustraction(impaire.sortie[k].multiplication(M));
+                this.sortie[k + (tailleP2 / 2)] = (paire.sortie[k]).soustraction(impaire.sortie[k].multiplication(M));
             }
+        }
+        return this.sortie;
+    }
+
+    /**
+     *
+     */
+    public Complexe[] inverseFFT() {
+        for (int i = 0; i < signal.length; i++) {
+            signal[i] = signal[i].conjugue();
+        }
+        this.fftRapideComplexe();
+        for (int i = 0; i < this.sortie.length; i++) {
+            this.sortie[i] = this.sortie[i].conjugue();
+            this.sortie[i] = this.sortie[i].multiplication(new Complexe(1 / (float) this.sortie.length, 0));
         }
         return this.sortie;
     }
