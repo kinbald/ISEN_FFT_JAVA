@@ -21,6 +21,20 @@ public class FftTest {
     }
 
     @Test
+    public void fftRapideReel() {
+        float[] signal = new float[8];
+        for (int i = 0; i < 8; i++) {
+            System.out.println(signal[i] = 
+        }
+        Fft tranformee = new Fft(8, signal);
+        Complexe[] sortie = tranformee.fftRapideReel();
+
+        for (int i = 0; i < 8; i++) {
+            System.out.println(sortie[i]);
+        }
+    }
+
+    @Test
     public void Fft() throws Exception
     {
         try {

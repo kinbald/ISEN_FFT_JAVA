@@ -51,15 +51,39 @@ public class Fft {
     /**
      * Cette méthode calcule une fft réel
      */
-    public float[] fftRapideReel() {
-        return this.sortieR;
+    public Complexe[] fftRapideReel() {
+        this.sortieR = new float[this.tailleP2];
+        if (tailleP2 == 1) {
+            this.sortieR[0] = this.signalR[0];
+        } else {
+            float[] tabPairs = new float[tailleP2 / 2];
+            float[] tabImpairs = new float[tailleP2 / 2];
+
+            for (int i = 0; i < this.tailleP2 / 2; i++){
+                tabPairs[i] = this.signalR[2 * i];
+                tabImpairs[i] = this.signalR[2 * i + 1];
+            }
+
+            Fft paire = new Fft(this.tailleP2 / 2, tabPairs);
+            Fft impaire = new Fft(this.tailleP2 / 2, tabImpairs);
+            //On calcule la FFT des deux listes
+            paire.fftRapideReel();
+            impaire.fftRapideReel();
+
+            for (int k = 0; k <= (tailleP2 / 2) - 1; k++) {
+                Complexe M = new Complexe((float) (-2 * Math.PI * k) / tailleP2);
+                this.sortie[k] = (paire.sortie[k]).addition(impaire.sortie[k].multiplication(M));
+                this.sortie[k + (tailleP2 / 2)] = (paire.sortie[k]).soustraction(impaire.sortie[k].multiplication(M));
+            }
+        }
+        return this.sortie;
     }
 
     /**
      * Cette méthode calcule une fft complèxe
      */
     public Complexe[] fftRapideComplexe() {
-        this.sortie = new Complexe[tailleP2];
+        this.sortie = new Complexe[this.tailleP2];
         if (tailleP2 == 1) {
             this.sortie[0] = this.signal[0];
         } else {
@@ -78,9 +102,9 @@ public class Fft {
             impaire.fftRapideComplexe();
 
             for (int k = 0; k <= (tailleP2 / 2) - 1; k++) {
-                Complexe M = new Complexe((float)(2 * Math.PI * k) / tailleP2);
+                Complexe M = new Complexe((float) (-2 * Math.PI * k) / tailleP2);
                 this.sortie[k] = (paire.sortie[k]).addition(impaire.sortie[k].multiplication(M));
-                this.sortie[k+(tailleP2/2)] = (paire.sortie[k]).soustraction(impaire.sortie[k].multiplication(M));
+                this.sortie[k + (tailleP2 / 2)] = (paire.sortie[k]).soustraction(impaire.sortie[k].multiplication(M));
             }
         }
         return this.sortie;
