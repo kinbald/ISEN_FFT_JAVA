@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
 
 public class FftTest {
     @Test
-    public void fftRapideComplexe() throws Exception {
+    public void fftRapideComplexeExpo() throws Exception {
         Complexe[] signal = new Complexe[8];
         for (int i = 0; i < 8; i++) {
             signal[i] = new Complexe((float) (2 * Math.PI * i));
@@ -17,6 +17,21 @@ public class FftTest {
 
         for (int i = 0; i < 8; i++) {
             System.out.println(sortie[i]);
+        }
+    }
+
+    @Test
+    public void fftRapideComplexeDirac() throws Exception {
+        Complexe[] valeurDirac = new Complexe[8];
+        valeurDirac[0]=new Complexe(1,0);
+        for (int i = 1; i < 8; i++) {
+            valeurDirac[i]=new Complexe(0,0);
+        }
+        Fft dirac= new Fft(8, valeurDirac);
+        Complexe[] sortie = dirac.fftRapideComplexe();
+        for(int i=0;i<valeurDirac.length;i++)
+        {
+            System.out.println("i = " + i + " : " + sortie[i]);
         }
     }
 

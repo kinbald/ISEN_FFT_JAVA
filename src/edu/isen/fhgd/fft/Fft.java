@@ -111,6 +111,21 @@ public class Fft {
     }
 
     /**
+     *
+     */
+    public Complexe[] inverseFFT() {
+        for (int i = 0; i < signal.length; i++) {
+            signal[i] = signal[i].conjugue();
+        }
+        this.fftRapideComplexe();
+        for (int i = 0; i < this.sortie.length; i++) {
+            this.sortie[i] = this.sortie[i].conjugue();
+            this.sortie[i] = this.sortie[i].multiplication(new Complexe(1 / (float) this.sortie.length, 0));
+        }
+        return this.sortie;
+    }
+
+    /**
      * Test si la valeur est bien une puissance de 2
      *
      * @param value
