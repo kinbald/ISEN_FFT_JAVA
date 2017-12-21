@@ -14,7 +14,7 @@ public class Cartesian {
 
             @Override
             public void run() {
-                CartesianFrame frame = new CartesianFrame();
+                CartesianFrame frame = new CartesianFrame(25,10);
                 frame.showUI();
 
                 frame.panel.drawPoint(new Point(3, 4));
@@ -27,8 +27,8 @@ public class Cartesian {
 class CartesianFrame extends JFrame {
     CartesianPanel panel;
 
-    public CartesianFrame() {
-        panel = new CartesianPanel();
+    public CartesianFrame(int tailleTableauX, int yMax) {
+        panel = new CartesianPanel(tailleTableauX, yMax);
         add(panel);
     }
 
@@ -43,24 +43,10 @@ class CartesianFrame extends JFrame {
 class CartesianPanel extends JPanel {
     private ArrayList<Point> points = new ArrayList<>();
     // numerate axis
-    private int xCoordNumbers = 20; //Taille abscisse
-    private int yCoordNumbers = 20; //Taille ordonnée
-    private int xLength = (X_AXIS_SECOND_X_COORD - X_AXIS_FIRST_X_COORD)
-            / xCoordNumbers;
-    private int yLength = (Y_AXIS_SECOND_Y_COORD - Y_AXIS_FIRST_Y_COORD)
-            / yCoordNumbers;
-
-    public void drawPoint(Point point) {
-        points.add(point);
-        repaint();
-    }
-
-    private void drawPointOnPanel(Point point, Graphics g) {
-        final int pointDiameter = 5;
-        final int x = X_AXIS_FIRST_X_COORD + (point.x * xLength) - pointDiameter / 2;
-        final int y = Y_AXIS_SECOND_Y_COORD - (point.y * yLength) - pointDiameter / 2;
-        g.fillOval(x, y, pointDiameter, pointDiameter);
-    }
+    private int xCoordNumbers; //Taille abscisse
+    private int yCoordNumbers; //Taille ordonnée
+    private int xLength;
+    private int yLength;
 
     // x-axis coord constants
     public static final int X_AXIS_FIRST_X_COORD = 50;
@@ -84,6 +70,27 @@ class CartesianPanel extends JPanel {
     // distance of coordinate strings from axis
     public static final int AXIS_STRING_DISTANCE = 20;
 
+    public CartesianPanel(int tailleTableauX, int yMax){
+        xCoordNumbers = tailleTableauX;
+        yCoordNumbers = yMax;
+
+        xLength = (X_AXIS_SECOND_X_COORD - X_AXIS_FIRST_X_COORD)
+                / xCoordNumbers;
+        yLength = (Y_AXIS_SECOND_Y_COORD - Y_AXIS_FIRST_Y_COORD)
+                / yCoordNumbers;
+    }
+
+    public void drawPoint(Point point) {
+        points.add(point);
+        repaint();
+    }
+
+    private void drawPointOnPanel(Point point, Graphics g) {
+        final int pointDiameter = 5;
+        final int x = X_AXIS_FIRST_X_COORD + (point.x * xLength) - pointDiameter / 2;
+        final int y = Y_AXIS_SECOND_Y_COORD - (point.y * yLength) - pointDiameter / 2;
+        g.fillOval(x, y, pointDiameter, pointDiameter);
+    }
 
     public void paintComponent(Graphics g) {
 
