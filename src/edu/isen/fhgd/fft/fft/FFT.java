@@ -1,4 +1,4 @@
-package edu.isen.fhgd.fft;
+package edu.isen.fhgd.fft.fft;
 
 import edu.isen.fhgd.fft.complexe.Complexe;
 import org.slf4j.Logger;

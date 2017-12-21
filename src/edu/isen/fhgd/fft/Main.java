@@ -1,5 +1,8 @@
 package edu.isen.fhgd.fft;
 
+import edu.isen.fhgd.fft.controller.FFTController;
+import edu.isen.fhgd.fft.fft.FFT;
+import edu.isen.fhgd.fft.vue.Fenetre;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

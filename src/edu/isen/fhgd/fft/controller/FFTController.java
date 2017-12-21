@@ -1,7 +1,9 @@
-package edu.isen.fhgd.fft;
+package edu.isen.fhgd.fft.controller;
 
 
 import edu.isen.fhgd.fft.complexe.Complexe;
+import edu.isen.fhgd.fft.fft.FFT;
+import edu.isen.fhgd.fft.vue.Fenetre;
 
 /**
  * Contrôleur de la FFT

@@ -1,5 +1,7 @@
-package edu.isen.fhgd.fft;
+package edu.isen.fhgd.fft.vue;
 
+import edu.isen.fhgd.fft.fft.FFT;
+import edu.isen.fhgd.fft.controller.FFTController;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
