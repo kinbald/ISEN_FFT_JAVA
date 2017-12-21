@@ -84,6 +84,22 @@ public class FFTTest {
     }
 
     @Test
+    public void inverseFFT() throws Exception {
+        Complexe[] entree = new Complexe[8];
+        for (int i = 0; i < 8; i++) {
+            entree[i] = new Complexe(0,0);
+        }
+        entree[1] = new Complexe(8,0);
+        FFT ifft = new FFT(8, entree);
+        ifft.inverseFFT();
+        float resultatsComplexes[][]={{1,0},{0.7f,0.7f},{0,1},{-0.7f,0.7f},{-1,0},{-0.7f,-0.7f},{0,-1},{0.7f,-0.7f}};
+        for (int i = 0; i < 8; i++) {
+            assertEquals(resultatsComplexes[i][0], ifft.getSortie(i).Re(), 0.1);
+            assertEquals(resultatsComplexes[i][1], ifft.getSortie(i).Im(), 0.1);
+        }
+    }
+
+    @Test
     public void FFT() throws Exception {
         try {
             float test[] = {0, 0};

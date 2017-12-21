@@ -4,11 +4,13 @@ import edu.isen.fhgd.fft.complexe.Complexe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Observable;
+
 /**
  * \file FFT.java
  * Class contenant les diffèrentes fft
  */
-public class FFT {
+public class FFT extends Observable {
     /**
      * Logger
      */
@@ -100,6 +102,7 @@ public class FFT {
                 this.sortie[k + (tailleP2 / 2)] = (paire.sortie[k]).soustraction(impaire.sortie[k].multiplication(M));
             }
         }
+        notifyObservers(this.sortie);
         return this.sortie;
     }
 
@@ -135,6 +138,7 @@ public class FFT {
                 this.sortie[k + (tailleP2 / 2)] = (paire.getSortie(k)).soustraction(impaire.getSortie(k).multiplication(M));
             }
         }
+        notifyObservers(this.sortie);
         return this.sortie;
     }
 
@@ -167,6 +171,7 @@ public class FFT {
     private boolean estPuissance2(int value) {
         //bitCount compte le nombre de bits à l'état haut
         //Pour la représentation d'une puissance de 2 en binaire, seul 1 bit est à l'état haut
+        LOGGER.debug("Vérification que le nombre " + value + " est une puissance de 2");
         return Long.bitCount(value) == 1;
     }
 
@@ -176,6 +181,7 @@ public class FFT {
      * @return tailleP2
      */
     public int getTailleP2() {
+        LOGGER.debug("Récupération de la taille du tableau");
         return tailleP2;
     }
 
@@ -186,6 +192,7 @@ public class FFT {
      * @return
      */
     public Complexe[] getSortie() {
+        LOGGER.debug("Récupération du tableau complet de sortie");
         return sortie;
     }
 
@@ -195,10 +202,52 @@ public class FFT {
      * @return
      */
     public Complexe getSortie(int lecture) throws IllegalArgumentException {
-        if(lecture >= 0 && lecture < sortie.length)
-        {
+        if (lecture >= 0 && lecture < sortie.length) {
+            LOGGER.debug("Récupération de la case " + lecture + " du tableau de sortie");
             return sortie[lecture];
         }
         throw new IllegalArgumentException("Lecture à la mauvaise case");
+    }
+
+    /**
+     * Permet de donner un nouveau signal complexe à executer
+     *
+     * @param signal
+     * @param tailleP2
+     * @throws IllegalArgumentException
+     */
+    public void setNewSignal(Complexe[] signal, int tailleP2) throws IllegalArgumentException {
+        if (estPuissance2(tailleP2)) {
+            this.tailleP2 = tailleP2;
+            this.signal = signal;
+            LOGGER.debug("Création d'un objet FFT de taille : " + tailleP2);
+        } else {
+            LOGGER.error("La taille " + tailleP2 + " doit être une puissance de 2 !");
+            throw new IllegalArgumentException("La taille " + tailleP2 + " doit être une puissance de 2 !");
+        }
+    }
+
+    /**
+     * Permet de donner un nouveau signal réel à executer
+     *
+     * @param signalR
+     * @param tailleP2
+     * @throws IllegalArgumentException
+     */
+    public void setNewSignalR(float[] signalR, int tailleP2) throws IllegalArgumentException {
+        if (estPuissance2(tailleP2)) {
+            this.tailleP2 = tailleP2;
+            this.signalR = signalR;
+            LOGGER.debug("Création d'un objet FFT de taille : " + tailleP2);
+        } else {
+            LOGGER.error("La taille " + tailleP2 + " doit être une puissance de 2 !");
+            throw new IllegalArgumentException("La taille " + tailleP2 + " doit être une puissance de 2 !");
+        }
+    }
+
+    @Override
+    public void notifyObservers() {
+        setChanged(); // Set the changed flag to true, otherwise observers won't be notified.
+        super.notifyObservers();
     }
 }
