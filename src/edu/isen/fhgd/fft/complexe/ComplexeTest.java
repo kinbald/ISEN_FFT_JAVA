@@ -2,7 +2,7 @@ package edu.isen.fhgd.fft.complexe;
 
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class ComplexeTest {
 

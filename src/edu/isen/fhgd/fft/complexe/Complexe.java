@@ -43,6 +43,17 @@ public class Complexe {
     public Complexe(float argument) {
         this.reel = (float) Math.cos(argument);
         this.imaginaire = (float) Math.sin(argument);
+        LOGGER.debug("Création du nombre complexe à partir de l'argument : " + this.toString());
+    }
+
+    /**
+     * Renvoie le module du nombre complexe
+     *
+     * @return
+     */
+    public float module() {
+        LOGGER.debug("Calcul du module");
+        return (float) Math.hypot(this.reel, this.imaginaire);
     }
 
     /**
@@ -52,6 +63,7 @@ public class Complexe {
      * @return
      */
     public Complexe addition(Complexe b) {
+        LOGGER.debug("Addition de " + this.toString() + " et " + b.toString());
         float reel = this.reel + b.reel;
         float imaginaire = this.imaginaire + b.imaginaire;
         return new Complexe(reel, imaginaire);
@@ -64,6 +76,7 @@ public class Complexe {
      * @return
      */
     public Complexe soustraction(Complexe b) {
+        LOGGER.debug("Soustraction de " + this.toString() + " et " + b.toString());
         float reel = this.reel - b.reel;
         float imaginaire = this.imaginaire - b.imaginaire;
         return new Complexe(reel, imaginaire);
@@ -75,6 +88,7 @@ public class Complexe {
      * @return
      */
     public Complexe conjugue() {
+        LOGGER.debug("Calcul du conjugué");
         return new Complexe(reel, -imaginaire);
     }
 
@@ -85,6 +99,7 @@ public class Complexe {
      * @return
      */
     public Complexe multiplication(Complexe b) {
+        LOGGER.debug("Multiplication de " + this.toString() + " et " + b.toString());
         float reel = this.reel * b.reel - this.imaginaire * b.imaginaire;
         float imaginaire = this.reel * b.imaginaire + this.imaginaire * b.reel;
         return new Complexe(reel, imaginaire);
@@ -116,7 +131,7 @@ public class Complexe {
 
     @Override
     public String toString() {
-        DecimalFormat df=new DecimalFormat();
+        DecimalFormat df = new DecimalFormat();
         df.setMaximumFractionDigits(4);
         return "Nombre complexe => Re : " + df.format(reel) + " | Im : " + df.format(imaginaire);
     }

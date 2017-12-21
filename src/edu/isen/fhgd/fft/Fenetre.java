@@ -1,41 +1,122 @@
 package edu.isen.fhgd.fft;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartPanel;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.geom.Ellipse2D;
 import java.util.Observable;
 import java.util.Observer;
 
+/**
+ * Fenêtre de l'application
+ */
 public class Fenetre extends JFrame implements Observer {
     /**
      * Logger
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(Fenetre.class);
 
+    /**
+     * Contrôleur de l'application
+     */
     private FFTController controller;
+    /**
+     * Choix d'action à effectuer
+     */
     private int choixActuel;
-    private CartesianPanel cartesian;
+    /**
+     * Affichage des valeurs
+     */
+    private JFreeChart graphique;
+    private ChartPanel plotPanel;
+    private static final Shape circle = new Ellipse2D.Double(-3, -3, 6, 6);
 
-    public Fenetre(FFTController controller)
-    {
+    /**
+     * Default constructor
+     *
+     * @param controller
+     */
+    public Fenetre(FFTController controller) {
         this.setTitle("Projet Java-Maths");
         this.setSize(500, 500);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
-        this.controller=controller;
-        choixActuel=0;
-        this.cartesian = new CartesianPanel();
-        this.add(cartesian);
+        this.controller = controller;
+        this.choixActuel = 0;
+
+        graphique = ChartFactory.createXYLineChart(
+                "Spectre", "N", "Magnitude",
+                null, PlotOrientation.VERTICAL, true, true, false);
+        plotPanel = new ChartPanel(graphique) {
+
+            @Override
+            public Dimension getPreferredSize() {
+                return new Dimension(300, 300);
+            }
+        };
+        BorderLayout layout = new BorderLayout();
+        this.setLayout(layout);
+        Container pane = this.getContentPane();
+
+        plotPanel.setMouseWheelEnabled(true);
+        pane.add(plotPanel, BorderLayout.NORTH);
+        JButton button = new JButton("Sinus");
+        button.addActionListener(actionEvent -> {
+            this.choixActuel = 1;
+            this.controller.notifyAction(choixActuel);
+        });
+        JButton button2 = new JButton("Exponentielle");
+        button2.addActionListener(actionEvent -> {
+            this.choixActuel = 2;
+            this.controller.notifyAction(choixActuel);
+        });
+
+        GridLayout grid = new GridLayout(1, 2);
+        JPanel panelSouth = new JPanel(grid);
+        panelSouth.add(button);
+        panelSouth.add(button2);
+        pane.add(panelSouth, BorderLayout.SOUTH);
         this.setVisible(true);
     }
 
-
+    /**
+     * Mise à jour de la vue
+     *
+     * @param o
+     * @param arg
+     */
     @Override
     public void update(Observable o, Object arg) {
-        if(o instanceof FFT) {
-            FFT fft=(FFT)o;
+        LOGGER.debug("Mise à jour de la vue");
+        if (o instanceof FFT) {
+            LOGGER.debug("Affichage des valeurs");
+            FFT fft = (FFT) o;
+            XYSeries serieDePoints = new XYSeries("FFT");
+            // Remplissage série de points
+            for (int i = 0; i < fft.getTailleP2(); i++) {
+                serieDePoints.add(i, fft.getSortie(i).module());
+            }
+            XYDataset xyDataset = new XYSeriesCollection(serieDePoints);
+
+            graphique = ChartFactory.createXYLineChart(
+                    "FFT", "N", "Magnitude",
+                    xyDataset, PlotOrientation.VERTICAL, true, false, false);
+            XYPlot plot = graphique.getXYPlot();
+            XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer(false, true);
+            renderer.setSeriesShape(0, circle);
+            plot.setRenderer(renderer);
+            this.plotPanel.setChart(graphique);
         }
     }
 }

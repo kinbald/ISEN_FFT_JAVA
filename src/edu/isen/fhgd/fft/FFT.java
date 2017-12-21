@@ -8,7 +8,7 @@ import java.util.Observable;
 
 /**
  * \file FFT.java
- * Class contenant les diffèrentes fft
+ * Class contenant les différentes fft
  */
 public class FFT extends Observable {
     /**
@@ -102,7 +102,7 @@ public class FFT extends Observable {
                 this.sortie[k + (tailleP2 / 2)] = (paire.sortie[k]).soustraction(impaire.sortie[k].multiplication(M));
             }
         }
-        notifyObservers(this.sortie);
+        this.notifyObservers();
         return this.sortie;
     }
 
@@ -138,7 +138,7 @@ public class FFT extends Observable {
                 this.sortie[k + (tailleP2 / 2)] = (paire.getSortie(k)).soustraction(impaire.getSortie(k).multiplication(M));
             }
         }
-        notifyObservers(this.sortie);
+        this.notifyObservers();
         return this.sortie;
     }
 
@@ -159,6 +159,7 @@ public class FFT extends Observable {
             this.sortie[i] = this.getSortie(i).conjugue();
             this.sortie[i] = this.getSortie(i).multiplication(new Complexe(1 / (float) this.sortie.length, 0));
         }
+        this.notifyObservers();
         return this.sortie;
     }
 
@@ -247,6 +248,7 @@ public class FFT extends Observable {
 
     @Override
     public void notifyObservers() {
+        LOGGER.debug("Notification de fin de calcul");
         setChanged(); // Set the changed flag to true, otherwise observers won't be notified.
         super.notifyObservers();
     }

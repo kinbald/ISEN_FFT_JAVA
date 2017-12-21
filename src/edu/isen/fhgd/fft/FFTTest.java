@@ -3,7 +3,8 @@ package edu.isen.fhgd.fft;
 import edu.isen.fhgd.fft.complexe.Complexe;
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 
 public class FFTTest {
 
@@ -24,30 +25,29 @@ public class FFTTest {
 
     @Test
     public void FFTReelleCosinus() {
-        float cosinus[]=new float[8];
-        for(int i=0;i<cosinus.length;i++)
-        {
-            cosinus[i]= (float) Math.cos(2*Math.PI*i/cosinus.length);
+        float cosinus[] = new float[8];
+        for (int i = 0; i < cosinus.length; i++) {
+            cosinus[i] = (float) Math.cos(2 * Math.PI * i / cosinus.length);
         }
         FFT cosinusTransform = new FFT(8, cosinus);
         cosinusTransform.FFTRelle();
-        float resultatsComplexes[][]={{0,0},{4,0},{0,0},{0,0},{0,0},{0,0},{0,0},{4,0}};
-        for(int i=0;i<cosinus.length;i++) {
+        float resultatsComplexes[][] = {{0, 0}, {4, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {4, 0}};
+        for (int i = 0; i < cosinus.length; i++) {
             assertEquals(resultatsComplexes[i][0], cosinusTransform.getSortie(i).Re(), Math.pow(10, -3));
             assertEquals(resultatsComplexes[i][1], cosinusTransform.getSortie(i).Im(), Math.pow(10, -3));
         }
     }
 
     @Test
-    public void FFTComplexeConstante(){
+    public void FFTComplexeConstante() {
         Complexe cst[] = new Complexe[8];
-        for (int indice=0 ; indice<cst.length; indice++){
-            cst[indice] = new Complexe(0,1);
+        for (int indice = 0; indice < cst.length; indice++) {
+            cst[indice] = new Complexe(0, 1);
         }
         FFT cstTransform = new FFT(8, cst);
         cstTransform.FFTComplexe();
-        float resultatsComplexes[][]={{0,8},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
-        for (int i=0; i<cst.length; i++ ){
+        float resultatsComplexes[][] = {{0, 8}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
+        for (int i = 0; i < cst.length; i++) {
             assertEquals(resultatsComplexes[i][0], cstTransform.getSortie(i).Re(), Math.pow(10, -3));
             assertEquals(resultatsComplexes[i][1], cstTransform.getSortie(i).Im(), Math.pow(10, -3));
         }
@@ -61,7 +61,7 @@ public class FFTTest {
         }
         FFT tranformee = new FFT(8, signal);
         tranformee.FFTComplexe();
-        float resultatsComplexes[][]={{0,0},{8,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
+        float resultatsComplexes[][] = {{0, 0}, {8, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}, {0, 0}};
         for (int i = 0; i < 8; i++) {
             assertEquals(resultatsComplexes[i][0], tranformee.getSortie(i).Re(), Math.pow(10, -3));
             assertEquals(resultatsComplexes[i][1], tranformee.getSortie(i).Im(), Math.pow(10, -3));
@@ -87,12 +87,12 @@ public class FFTTest {
     public void inverseFFT() throws Exception {
         Complexe[] entree = new Complexe[8];
         for (int i = 0; i < 8; i++) {
-            entree[i] = new Complexe(0,0);
+            entree[i] = new Complexe(0, 0);
         }
-        entree[1] = new Complexe(8,0);
+        entree[1] = new Complexe(8, 0);
         FFT ifft = new FFT(8, entree);
         ifft.inverseFFT();
-        float resultatsComplexes[][]={{1,0},{0.7f,0.7f},{0,1},{-0.7f,0.7f},{-1,0},{-0.7f,-0.7f},{0,-1},{0.7f,-0.7f}};
+        float resultatsComplexes[][] = {{1, 0}, {0.7f, 0.7f}, {0, 1}, {-0.7f, 0.7f}, {-1, 0}, {-0.7f, -0.7f}, {0, -1}, {0.7f, -0.7f}};
         for (int i = 0; i < 8; i++) {
             assertEquals(resultatsComplexes[i][0], ifft.getSortie(i).Re(), 0.1);
             assertEquals(resultatsComplexes[i][1], ifft.getSortie(i).Im(), 0.1);

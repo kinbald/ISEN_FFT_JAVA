@@ -3,28 +3,60 @@ package edu.isen.fhgd.fft;
 
 import edu.isen.fhgd.fft.complexe.Complexe;
 
-import java.util.List;
-
+/**
+ * Contrôleur de la FFT
+ */
 public class FFTController {
+    /**
+     * Modèle de données FFT
+     */
     private FFT model = null;
+    /**
+     * Fenêtre d'affichage
+     */
     private Fenetre fen;
 
+    /**
+     * Default constructor
+     *
+     * @param model
+     */
     public FFTController(FFT model) {
         this.model = model;
     }
 
+    /**
+     * Setter de la FFT
+     *
+     * @param fft
+     */
     public void setFft(FFT fft) {
         this.model = fft;
     }
 
+    /**
+     * Récupération de la fenêtre
+     *
+     * @return
+     */
     public Fenetre getFen() {
         return fen;
     }
 
+    /**
+     * Setter de fenêtre
+     *
+     * @param fen
+     */
     public void setFen(Fenetre fen) {
         this.fen = fen;
     }
 
+    /**
+     * Notification d'une action par la vue
+     *
+     * @param choix
+     */
     public void notifyAction(int choix) {
         switch (choix) {
             case 1:
