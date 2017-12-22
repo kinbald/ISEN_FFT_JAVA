@@ -51,7 +51,7 @@ public class Fenetre extends JFrame implements Observer {
      */
     public Fenetre(FFTController controller) {
         this.setTitle("Projet Java-Maths");
-        this.setSize(500, 500);
+        this.setSize(800, 800);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setLocationRelativeTo(null);
         this.controller = controller;
@@ -98,7 +98,7 @@ public class Fenetre extends JFrame implements Observer {
             this.choixActuel = 5;
             this.controller.notifyAction(choixActuel);
         });
-        JButton button6 = new JButton("Inverse FFT");
+        JButton button6 = new JButton("Inverse FFT (CONSTANTE)");
         button6.addActionListener(actionEvent -> {
             this.choixActuel = 6;
             this.controller.notifyAction(choixActuel);
