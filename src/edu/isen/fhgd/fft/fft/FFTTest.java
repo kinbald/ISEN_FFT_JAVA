@@ -106,7 +106,7 @@ public class FFTTest {
             FFT objet = new FFT(51, test);
             fail("Expected an IllegalArgumentException to be thrown");
         } catch (IllegalArgumentException aExp) {
-            assert (aExp.getMessage().contains("La taille n'est pas une puissance de 2"));
+            assert (aExp.getMessage().contains("La taille 51 doit être une puissance de 2 !"));
         }
 
         try {
