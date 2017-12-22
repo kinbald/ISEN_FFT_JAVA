@@ -73,21 +73,45 @@ public class Fenetre extends JFrame implements Observer {
 
         plotPanel.setMouseWheelEnabled(true);
         pane.add(plotPanel, BorderLayout.NORTH);
-        JButton button = new JButton("Sinus");
+        JButton button = new JButton("Sinus Réel");
         button.addActionListener(actionEvent -> {
             this.choixActuel = 1;
             this.controller.notifyAction(choixActuel);
         });
-        JButton button2 = new JButton("Exponentielle");
+        JButton button2 = new JButton("Exponentielle Complexe");
         button2.addActionListener(actionEvent -> {
             this.choixActuel = 2;
             this.controller.notifyAction(choixActuel);
         });
+        JButton button3 = new JButton("Cosinus réel");
+        button3.addActionListener(actionEvent -> {
+            this.choixActuel = 3;
+            this.controller.notifyAction(choixActuel);
+        });
+        JButton button4 = new JButton("Exponentielle réelle");
+        button4.addActionListener(actionEvent -> {
+            this.choixActuel = 4;
+            this.controller.notifyAction(choixActuel);
+        });
+        JButton button5 = new JButton("Constante complexe");
+        button5.addActionListener(actionEvent -> {
+            this.choixActuel = 5;
+            this.controller.notifyAction(choixActuel);
+        });
+        JButton button6 = new JButton("Inverse FFT");
+        button6.addActionListener(actionEvent -> {
+            this.choixActuel = 6;
+            this.controller.notifyAction(choixActuel);
+        });
 
-        GridLayout grid = new GridLayout(1, 2);
+        GridLayout grid = new GridLayout(2, 3);
         JPanel panelSouth = new JPanel(grid);
         panelSouth.add(button);
         panelSouth.add(button2);
+        panelSouth.add(button3);
+        panelSouth.add(button4);
+        panelSouth.add(button5);
+        panelSouth.add(button6);
         pane.add(panelSouth, BorderLayout.SOUTH);
         this.setVisible(true);
     }
