@@ -211,6 +211,32 @@ public class FFT extends Observable {
     }
 
     /**
+     * Renvoie une valeur du tableau d'entrée
+     *
+     * @return
+     */
+    public Complexe getSignalComplexe(int lecture) throws IllegalArgumentException {
+        if (lecture >= 0 && lecture < sortie.length) {
+            LOGGER.debug("Récupération de la case " + lecture + " du tableau de sortie");
+            return signal[lecture];
+        }
+        throw new IllegalArgumentException("Lecture à la mauvaise case");
+    }
+
+    /**
+     * Renvoie une valeur du tableau d'entrée
+     *
+     * @return
+     */
+    public float getSignalReel(int lecture) throws IllegalArgumentException {
+        if (lecture >= 0 && lecture < sortie.length) {
+            LOGGER.debug("Récupération de la case " + lecture + " du tableau de sortie");
+            return signalR[lecture];
+        }
+        throw new IllegalArgumentException("Lecture à la mauvaise case");
+    }
+
+    /**
      * Permet de donner un nouveau signal complexe à executer
      *
      * @param signal
