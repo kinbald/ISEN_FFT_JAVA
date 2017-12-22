@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import java.util.Observable;
 
 /**
- * \file FFT.java
  * Class contenant les différentes fft
  */
 public class FFT extends Observable {
@@ -39,8 +38,8 @@ public class FFT extends Observable {
     /**
      * Constructeur d'objet à partir d'un signal complexe
      *
-     * @param tailleP2
-     * @param signal
+     * @param tailleP2 Taille de la série
+     * @param signal   Série de données
      */
     public FFT(int tailleP2, Complexe[] signal) throws IllegalArgumentException {
         if (estPuissance2(tailleP2)) {
@@ -56,8 +55,8 @@ public class FFT extends Observable {
     /**
      * Constructeur d'objet à partir d'un signal réel
      *
-     * @param tailleP2
-     * @param tabReel
+     * @param tailleP2 Taille de la série
+     * @param tabReel  Série de données
      */
     public FFT(int tailleP2, float[] tabReel) throws IllegalArgumentException {
         if (estPuissance2(tailleP2)) {
@@ -166,7 +165,7 @@ public class FFT extends Observable {
     /**
      * Méthode vérifiant si une valeur correspond bien à une puissance de 2
      *
-     * @param value
+     * @param value Valeur à tester
      * @return
      */
     private boolean estPuissance2(int value) {
@@ -186,7 +185,6 @@ public class FFT extends Observable {
         return tailleP2;
     }
 
-
     /**
      * Renvoie le tableau de sortie
      *
@@ -200,7 +198,9 @@ public class FFT extends Observable {
     /**
      * Renvoie une valeur du tableau de sortie
      *
+     * @param lecture Case à récupérer
      * @return
+     * @throws IllegalArgumentException
      */
     public Complexe getSortie(int lecture) throws IllegalArgumentException {
         if (lecture >= 0 && lecture < sortie.length) {
@@ -213,7 +213,9 @@ public class FFT extends Observable {
     /**
      * Renvoie une valeur du tableau d'entrée
      *
+     * @param lecture Case à récupérer
      * @return
+     * @throws IllegalArgumentException
      */
     public Complexe getSignalComplexe(int lecture) throws IllegalArgumentException {
         if (lecture >= 0 && lecture < sortie.length) {
@@ -226,7 +228,9 @@ public class FFT extends Observable {
     /**
      * Renvoie une valeur du tableau d'entrée
      *
+     * @param lecture Case à récupérer
      * @return
+     * @throws IllegalArgumentException
      */
     public float getSignalReel(int lecture) throws IllegalArgumentException {
         if (lecture >= 0 && lecture < sortie.length) {
@@ -239,8 +243,8 @@ public class FFT extends Observable {
     /**
      * Permet de donner un nouveau signal complexe à executer
      *
-     * @param signal
-     * @param tailleP2
+     * @param signal   Nouveau signal à ajouter
+     * @param tailleP2 Nouvelle taille du signal
      * @throws IllegalArgumentException
      */
     public void setNewSignal(Complexe[] signal, int tailleP2) throws IllegalArgumentException {
@@ -257,8 +261,8 @@ public class FFT extends Observable {
     /**
      * Permet de donner un nouveau signal réel à executer
      *
-     * @param signalR
-     * @param tailleP2
+     * @param signalR  Nouveau signal réel à ajouter
+     * @param tailleP2 Nouvelle taille du signal
      * @throws IllegalArgumentException
      */
     public void setNewSignalR(float[] signalR, int tailleP2) throws IllegalArgumentException {

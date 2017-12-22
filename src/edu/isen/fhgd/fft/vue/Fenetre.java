@@ -47,7 +47,7 @@ public class Fenetre extends JFrame implements Observer {
     /**
      * Default constructor
      *
-     * @param controller
+     * @param controller Contrôleur de l'application
      */
     public Fenetre(FFTController controller) {
         this.setTitle("Projet Java-Maths");

@@ -6,7 +6,6 @@ import org.slf4j.LoggerFactory;
 import java.text.DecimalFormat;
 
 /**
- * \file Complexe.java
  * Création d'un type de données : Complexe
  */
 public class Complexe {
